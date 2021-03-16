@@ -9,9 +9,14 @@ import UIKit
 
 class ViewController: UIViewController {
     var gameModel: GameModel!
+    
+    var displayLink:CADisplayLink?
+    
+    var first = true
     @IBOutlet var gameView: GameView! {
         didSet {
-            gameModel = GameModel(gameView.bounds, 1)
+           
+            gameModel = GameModel(gameView.bounds, 2)
         }
     }
     override func viewDidLoad() {
@@ -20,23 +25,24 @@ class ViewController: UIViewController {
     }
 
     @IBAction func drawTapped(_ sender: UIButton) {
-        var first = true
-        Timer.scheduledTimer(withTimeInterval: 0.0001,
-                                     repeats: true) { [weak self](timer) in
-            
-            guard let self = self else {return}
-            if first {
-                self.gameView.rectForDots = self.gameModel.getInitialDots()
-                first = false
-            } else {
-                
-                self.gameView.rectForDots.append( self.gameModel.createRectForDot())
-            }
-            
-            
-            self.gameView.setNeedsDisplay()
-         }
-    }
-    
-}
 
+        
+                let link = CADisplayLink(target: self, selector: #selector(addForDrawing))
+                link.add(to: .main, forMode: .default)
+                displayLink = link
+    }
+    @objc func addForDrawing() {
+        
+    
+        if first {
+            gameView.rectForDots = gameModel.getInitialDots()
+            first = false
+            
+        } else {
+            let rect =  gameModel.createRectForDot()
+            gameView.rectForDots.append(rect)
+            gameView.layer.setNeedsDisplay(rect)
+        }
+        
+    }
+}

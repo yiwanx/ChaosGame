@@ -10,6 +10,7 @@ import UIKit
 class GameView: UIView {
     let dotSize:CGFloat = 1
     var rectForDots = [CGRect]()
+    
 //    var displayLink: CADisplayLink?
         override func draw(_ rect: CGRect) {
             guard let context = UIGraphicsGetCurrentContext() else {return}
@@ -17,7 +18,6 @@ class GameView: UIView {
             context.setFillColor(UIColor.black.cgColor)
 //
             for rect in rectForDots {
-               
                 context.addEllipse(in: rect)
             }
             context.fillPath()
@@ -64,6 +64,30 @@ class GameView: UIView {
 
 
         }
+//    func drawSpiralWithLink() {
+//        let link = CADisplayLink(target: self, selector: #selector(drawSpiral))
+//        link.add(to: .main, forMode: .default)
+//        displayLink = link
+//    }
+//    
+//    @objc func drawSpiral() {
+//        if self.spiralPoints.isEmpty {
+//            self.createSpiral()
+//            self.currentTouchPosition = nil
+//        } else {
+//            let previousPoint = self.currentTouchPosition ?? self.spiralPoints.removeFirst()
+//            let newPoint = self.spiralPoints.removeFirst()
+//            
+//            self.draw(from: previousPoint, to: newPoint)
+//            
+//            self.currentTouchPosition = newPoint
+//        }
+//    }
+//    func clear() {
+//        rectForDots.removeAll()
+//        image = nil
+////        stopAutoDrawing()
+//    }
         func drawNewDot(_ rect: CGRect) {
 
             let dot = UIBezierPath(ovalIn: rect)
