@@ -18,6 +18,7 @@ class GameModel {
     var y: CGFloat!
     init(_ bounds: CGRect, _ dotSize: CGFloat) {
         self.bounds = bounds
+        
         self.dotSize = dotSize
         rectA = CGRect(x: (bounds.width - dotSize) / 2, y: 0, width: dotSize, height: dotSize)
         rectB = CGRect(x: bounds.width - dotSize, y: bounds.height - dotSize, width: dotSize, height: dotSize)
@@ -29,6 +30,7 @@ class GameModel {
         return [rectA,rectB,rectC]
     }
     func createRectForDot()->CGRect {
+        
         let r = Int.random(in: 0...2)
         if r == 0 {
             x = (x + rectA.minX)/2

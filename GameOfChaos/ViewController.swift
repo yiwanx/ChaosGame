@@ -12,36 +12,54 @@ class ViewController: UIViewController {
     
     var displayLink:CADisplayLink?
     
+    @IBOutlet var dotWidthSlider: UISlider!
+    @IBOutlet var dotWidthLabel: UILabel!
     var first = true
+    var dotWidth: Float = 1.00
     @IBOutlet var gameView: GameView! {
         didSet {
-           
-            gameModel = GameModel(gameView.bounds, 2)
+          
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+      
     }
 
-    @IBAction func drawTapped(_ sender: UIButton) {
-
+    @IBAction func dotWidthSliderAction(_ sender: UISlider) {
+        dotWidth = round(sender.value*100)/100
+        dotWidthLabel.text = "Dot width: \(round(sender.value*100)/100)"
+    }
+    @IBAction func clearTapped(_ sender: UIButton) {
         
-                let link = CADisplayLink(target: self, selector: #selector(addForDrawing))
-                link.add(to: .main, forMode: .default)
-                displayLink = link
+        displayLink?.invalidate()
+        displayLink = nil
+        gameView.clearRectForDots()
+        gameView.setNeedsDisplay()
+
+    }
+    @IBAction func drawTapped(_ sender: UIButton) {
+        if displayLink == nil {
+            gameModel = GameModel(gameView.bounds, CGFloat(dotWidth))
+
+            let link = CADisplayLink(target: self, selector: #selector(addForDrawing))
+            link.add(to: .main, forMode: .common)
+            displayLink = link
+        }
+       
     }
     @objc func addForDrawing() {
-        
-    
         if first {
             gameView.rectForDots = gameModel.getInitialDots()
             first = false
             
         } else {
-            let rect =  gameModel.createRectForDot()
+            
+            let rect = gameModel.createRectForDot()
             gameView.rectForDots.append(rect)
             gameView.layer.setNeedsDisplay(rect)
+            
         }
         
     }
