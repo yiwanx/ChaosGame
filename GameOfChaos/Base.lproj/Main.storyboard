@@ -37,7 +37,7 @@
                                     <color key="titleColor" red="0.0" green="0.29402740090000001" blue="0.88809842829999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="drawTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H4s-tQ-gdu"/>
+                                    <action selector="drawLinkTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H4s-tQ-gdu"/>
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="rAX-5v-UJm">

@@ -36,10 +36,11 @@ class ViewController: UIViewController {
         displayLink?.invalidate()
         displayLink = nil
         gameView.clearRectForDots()
+        gameView.clearImage()
         gameView.setNeedsDisplay()
-
+        
     }
-    @IBAction func drawTapped(_ sender: UIButton) {
+    @IBAction func drawLinkTapped(_ sender: UIButton) {
         if displayLink == nil {
             gameModel = GameModel(gameView.bounds, CGFloat(dotWidth))
 
@@ -59,8 +60,13 @@ class ViewController: UIViewController {
             let rect = gameModel.createRectForDot()
             gameView.rectForDots.append(rect)
             gameView.layer.setNeedsDisplay(rect)
+            gameView.checkIfTooManyPointsIn()
             
         }
         
     }
+    
+
+    
+
 }

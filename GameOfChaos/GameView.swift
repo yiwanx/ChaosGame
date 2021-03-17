@@ -8,7 +8,7 @@
 import UIKit
 
 class GameView: UIView {
-    let dotSize:CGFloat = 1
+    var flattenedImage: UIImage?
     var rectForDots = [CGRect]()
     func clearRectForDots() {
         rectForDots.removeAll()
@@ -16,8 +16,12 @@ class GameView: UIView {
     
     
     override func draw(_ rect: CGRect) {
+        super.draw(rect)
         guard let context = UIGraphicsGetCurrentContext() else {return}
-        
+        if let image = flattenedImage {
+            
+            image.draw(in: rect)
+        }
         context.setFillColor(UIColor.black.cgColor)
         
         for rect in rectForDots {
@@ -25,5 +29,27 @@ class GameView: UIView {
         }
         context.fillPath()
         
+    }
+    
+    func getImageRepresentation() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size,isOpaque, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        if let context = UIGraphicsGetCurrentContext() {
+            layer.render(in: context)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            return image
+        }
+        return nil
+    }
+    func checkIfTooManyPointsIn() {
+        let maxRects = 200
+        if rectForDots.count > maxRects {
+            flattenedImage = getImageRepresentation()
+            
+            rectForDots.removeFirst(maxRects - 1)
+        }
+    }
+    func clearImage(){
+        flattenedImage = nil
     }
 }
