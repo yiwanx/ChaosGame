@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         displayLink?.invalidate()
         displayLink = nil
         gameView.clearRectForDots()
-        gameView.clearImage()
+//        gameView.clearImage()
         gameView.setNeedsDisplay()
         
     }
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
             let rect = gameModel.createRectForDot()
             gameView.rectForDots.append(rect)
             gameView.layer.setNeedsDisplay(rect)
-            gameView.checkIfTooManyPointsIn()
+            gameView.checkIfTooManyRectsIn()
             
         }
         

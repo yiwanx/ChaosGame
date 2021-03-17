@@ -20,7 +20,7 @@ class GameView: UIView {
         guard let context = UIGraphicsGetCurrentContext() else {return}
         if let image = flattenedImage {
             
-            image.draw(in: rect)
+            image.draw(in: self.bounds)
         }
         context.setFillColor(UIColor.black.cgColor)
         
@@ -41,7 +41,7 @@ class GameView: UIView {
         }
         return nil
     }
-    func checkIfTooManyPointsIn() {
+    func checkIfTooManyRectsIn() {
         let maxRects = 200
         if rectForDots.count > maxRects {
             flattenedImage = getImageRepresentation()
