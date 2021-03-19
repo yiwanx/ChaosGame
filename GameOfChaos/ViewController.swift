@@ -54,7 +54,7 @@ class ViewController: UIViewController {
             gameModel = GameModel(gameView.bounds, CGFloat(dotWidth), for: numberOfInitialDots)
             //Syncronize frame update and creation of dots
             let link = CADisplayLink(target: self, selector: #selector(addForDrawing))
-            link.add(to: .main, forMode: .common)
+            link.add(to: .main, forMode: .default)
             displayLink = link
         }
        
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
 
     @objc func addForDrawing() {
         if first {
-            //Pass for drawing initial dots
+            //Pass rects to GameView to draw initial dots
             var rectsToDraw = [CGRect]()
             gameModel.getInitialDots().forEach { rect in
                 rectsToDraw.append(rect)
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
             first = false
             
         } else {
-            //Pass for drawing "random" dots
+            //Pass rects to GameView to draw "random" dots
             var rectsToDraw = [CGRect]()
             for _ in 0..<dotsPerFrame {
                 rectsToDraw.append(gameModel.createRectForDot())

@@ -21,9 +21,12 @@ class GameModel {
         x = CGFloat.random(in: 0..<bounds.width - dotSize)
         y = CGFloat.random(in: 0..<bounds.height - dotSize)
     }
+    
+    //Calculate initial dots (or coordinates of vertices of a polygon with n sides) .
     func getInitialDots() -> [CGRect] {
-        //
+        
         let r = min(bounds.width, bounds.height) / 2
+        
         let baseTheta = 2 * .pi / CGFloat(numberOfSides)
         let offset = numberOfSides % 2 == 0 ? baseTheta / 2 : .pi / 2
     
@@ -41,6 +44,7 @@ class GameModel {
         }
         return vertices
     }
+    //Calculate all other points
     func createRectForDot()->CGRect {
         
         let r = Int.random(in: 0..<numberOfSides)
