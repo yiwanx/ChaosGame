@@ -33,7 +33,7 @@ class GameModel {
             let x = r * cos(theta) + center.x
             let xFormatted = x >= bounds.maxX ? bounds.maxX - dotSize : x
             let y = r * sin(theta) + center.y
-            // perform rotation
+            // perform rotation on Y
             let absY = abs(y - bounds.height)
             let yFormatted = absY >= bounds.maxY ? bounds.maxY - dotSize : absY
             

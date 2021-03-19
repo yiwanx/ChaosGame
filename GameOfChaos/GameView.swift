@@ -18,17 +18,20 @@ class GameView: UIImageView {
     }
     
     
-    func drawBezier(_ rectForDot: CGRect) {
+    func drawCALayer(_ rectForDots: [CGRect]) {
         setupDrawingLayerIfNeeded()
-        let dot = CAShapeLayer()
-        let dotPath = UIBezierPath(ovalIn: rectForDot)
-        dot.contentsScale = UIScreen.main.scale
         
-        dot.path = dotPath.cgPath
-        dot.fillColor = UIColor.black.cgColor
-        dot.opacity = 1
+        let layer = CAShapeLayer()
+        layer.contentsScale = UIScreen.main.scale
+        let path = CGMutablePath()
+       
+        for rect in rectForDots {
+            path.addEllipse(in: rect)
+        }
+        layer.path = path
+        layer.fillColor = UIColor.black.cgColor
         
-        drawingLayer?.addSublayer(dot)
+        drawingLayer?.addSublayer(layer)
         
         if let count = drawingLayer?.sublayers?.count, count > 400 {
             flattenToImage()
@@ -54,7 +57,6 @@ class GameView: UIImageView {
         UIGraphicsEndImageContext()
     }
     func clearLayer() {
-        
         clearSublayers()
         image = nil
     }
