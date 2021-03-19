@@ -12,21 +12,24 @@ class ViewController: UIViewController {
     
     var displayLink:CADisplayLink?
     
+    @IBOutlet var numberOfDotsLabel: UILabel!
     @IBOutlet var dotWidthSlider: UISlider!
     @IBOutlet var dotWidthLabel: UILabel!
     var first = true
     var dotWidth: Float = 1.00
-    @IBOutlet var gameView: GameView! {
-        didSet {
-          
-        }
-    }
+    var numberOfDots: Int = 3
+    @IBOutlet var gameView: GameView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
       
     }
 
+    @IBAction func numberOfDotsAction(_ sender: UISlider) {
+        
+        numberOfDotsLabel.text = "Number of Initial Dots: \(Int(sender.value))"
+        numberOfDots = (Int(sender.value))
+    }
     @IBAction func dotWidthSliderAction(_ sender: UISlider) {
         dotWidth = round(sender.value*100)/100
         dotWidthLabel.text = "Dot width: \(round(sender.value*100)/100)"
@@ -35,14 +38,12 @@ class ViewController: UIViewController {
         
         displayLink?.invalidate()
         displayLink = nil
-        gameView.clearRectForDots()
-//        gameView.clearImage()
-        gameView.setNeedsDisplay()
+        gameView.clearLayer()
         
     }
     @IBAction func drawLinkTapped(_ sender: UIButton) {
         if displayLink == nil {
-            gameModel = GameModel(gameView.bounds, CGFloat(dotWidth))
+            gameModel = GameModel(gameView.bounds, CGFloat(dotWidth), for: numberOfDots)
 
             let link = CADisplayLink(target: self, selector: #selector(addForDrawing))
             link.add(to: .main, forMode: .common)
@@ -52,15 +53,16 @@ class ViewController: UIViewController {
     }
     @objc func addForDrawing() {
         if first {
-            gameView.rectForDots = gameModel.getInitialDots()
+            gameModel.getInitialDots().forEach { rect in
+                gameView.drawBezier(rect)
+            }
+            gameView.flattenToImage()
             first = false
             
         } else {
             
             let rect = gameModel.createRectForDot()
-            gameView.rectForDots.append(rect)
-            gameView.layer.setNeedsDisplay(rect)
-            gameView.checkIfTooManyRectsIn()
+            gameView.drawBezier(rect)
             
         }
         

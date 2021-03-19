@@ -7,49 +7,67 @@
 
 import UIKit
 
-class GameView: UIView {
-    var flattenedImage: UIImage?
-    var rectForDots = [CGRect]()
-    func clearRectForDots() {
-        rectForDots.removeAll()
-    }
+class GameView: UIImageView {
     
+    var drawingLayer: CALayer?
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        guard let context = UIGraphicsGetCurrentContext() else {return}
-        if let image = flattenedImage {
-            
-            image.draw(in: self.bounds)
-        }
-        context.setFillColor(UIColor.black.cgColor)
-        
-        for rect in rectForDots {
-            context.addEllipse(in: rect)
-        }
-        context.fillPath()
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        isUserInteractionEnabled = true
         
     }
     
-    func getImageRepresentation() -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(bounds.size,isOpaque, 0.0)
-        defer { UIGraphicsEndImageContext() }
+    
+    func drawBezier(_ rectForDot: CGRect) {
+        setupDrawingLayerIfNeeded()
+        let dot = CAShapeLayer()
+        let dotPath = UIBezierPath(ovalIn: rectForDot)
+        dot.contentsScale = UIScreen.main.scale
+        
+        dot.path = dotPath.cgPath
+        dot.fillColor = UIColor.black.cgColor
+        dot.opacity = 1
+        
+        drawingLayer?.addSublayer(dot)
+        
+        if let count = drawingLayer?.sublayers?.count, count > 400 {
+            flattenToImage()
+        }
+    }
+
+    func flattenToImage() {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
         if let context = UIGraphicsGetCurrentContext() {
-            layer.render(in: context)
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            return image
-        }
-        return nil
-    }
-    func checkIfTooManyRectsIn() {
-        let maxRects = 200
-        if rectForDots.count > maxRects {
-            flattenedImage = getImageRepresentation()
             
-            rectForDots.removeFirst(maxRects - 1)
+            // keep old drawings
+            if let image = self.image {
+                image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+            }
+            
+            // add new drawings
+            drawingLayer?.render(in: context)
+            
+            let output = UIGraphicsGetImageFromCurrentImageContext()
+            self.image = output
         }
+        clearSublayers()
+        UIGraphicsEndImageContext()
     }
-    func clearImage(){
-        flattenedImage = nil
+    func clearLayer() {
+        
+        clearSublayers()
+        image = nil
     }
+    func clearSublayers() {
+        drawingLayer?.removeFromSuperlayer()
+        drawingLayer = nil
+    }
+    func setupDrawingLayerIfNeeded() {
+          guard drawingLayer == nil else { return }
+          let sublayer = CALayer()
+          sublayer.contentsScale = UIScreen.main.scale
+          layer.addSublayer(sublayer)
+          self.drawingLayer = sublayer
+      }
+
 }

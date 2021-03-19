@@ -10,43 +10,44 @@ import UIKit
 class GameModel {
     let bounds: CGRect
     let dotSize: CGFloat
-    var rects = [CGRect]()
-    let rectA:CGRect!
-    let rectB:CGRect!
-    let rectC:CGRect!
+    var numberOfSides = 3
+    lazy var initialDots = getInitialDots()
     var x: CGFloat!
     var y: CGFloat!
-    init(_ bounds: CGRect, _ dotSize: CGFloat) {
+    init(_ bounds: CGRect, _ dotSize: CGFloat, for numberOfSides: Int) {
         self.bounds = bounds
-        
+        self.numberOfSides = numberOfSides
         self.dotSize = dotSize
-        rectA = CGRect(x: (bounds.width - dotSize) / 2, y: 0, width: dotSize, height: dotSize)
-        rectB = CGRect(x: bounds.width - dotSize, y: bounds.height - dotSize, width: dotSize, height: dotSize)
-        rectC = CGRect(x: 0, y: bounds.height - dotSize, width:dotSize, height: dotSize)
         x = CGFloat.random(in: 0..<bounds.width - dotSize)
         y = CGFloat.random(in: 0..<bounds.height - dotSize)
     }
     func getInitialDots() -> [CGRect] {
-        return [rectA,rectB,rectC]
+        //
+        let r = min(bounds.width, bounds.height) / 2
+        let baseTheta = 2 * .pi / CGFloat(numberOfSides)
+        let offset = numberOfSides % 2 == 0 ? baseTheta / 2 : .pi / 2
+    
+        let center = (x: bounds.midX, y: bounds.midY)
+        let vertices = (0 ..< numberOfSides).map { i -> CGRect in
+            let theta = CGFloat(i) * baseTheta + offset
+            let x = r * cos(theta) + center.x
+            let xFormatted = x >= bounds.maxX ? bounds.maxX - dotSize : x
+            let y = r * sin(theta) + center.y
+            // perform rotation
+            let absY = abs(y - bounds.height)
+            let yFormatted = absY >= bounds.maxY ? bounds.maxY - dotSize : absY
+            
+        return CGRect(x: xFormatted, y: yFormatted, width: dotSize, height: dotSize)
+        }
+        return vertices
     }
     func createRectForDot()->CGRect {
         
-        let r = Int.random(in: 0...2)
-        if r == 0 {
-            x = (x + rectA.minX)/2
-            y = (y + rectA.minY)/2
-            let rect = CGRect(x: x, y: y, width: dotSize, height: dotSize)
-            return rect
-        } else if r == 1 {
-            x = (x + rectB.minX)/2
-            y = (y + rectB.minY)/2
-            let rect = CGRect(x: x, y: y, width: dotSize, height: dotSize)
-            return rect
-        } else {
-            x = (x + rectC.minX)/2
-            y = (y + rectC.minY)/2
-            let rect = CGRect(x: x, y: y, width: dotSize, height: dotSize)
-            return rect
-        }
+        let r = Int.random(in: 0..<numberOfSides)
+        x = (x + initialDots[r].minX)/2
+        y = (y + initialDots[r].minY)/2
+        let rect = CGRect(x: x, y: y, width: dotSize, height: dotSize)
+        return rect
     }
 }
+

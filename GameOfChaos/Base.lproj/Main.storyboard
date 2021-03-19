@@ -19,7 +19,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qdg-NI-Q5u" customClass="GameView" customModule="GameOfChaos" customModuleProvider="target">
                                 <rect key="frame" x="10" y="84" width="394" height="394"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <color key="backgroundColor" red="0.8823045123318386" green="0.81605591367713004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="qdg-NI-Q5u" secondAttribute="height" id="NWs-QM-iPs"/>
                                 </constraints>
@@ -41,7 +41,7 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="rAX-5v-UJm">
-                                <rect key="frame" x="14" y="765" width="386" height="31"/>
+                                <rect key="frame" x="18" y="765" width="378" height="31"/>
                                 <connections>
                                     <action selector="dotWidthSliderAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="yMG-hP-g4x"/>
                                 </connections>
@@ -56,20 +56,37 @@
                                     <action selector="clearTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tBf-84-uhi"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="3" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="zBZ-Le-M5t">
+                                <rect key="frame" x="18" y="696" width="378" height="31"/>
+                                <connections>
+                                    <action selector="numberOfDotsAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="C47-f8-usp"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Initial Dots: 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ha5-qQ-F45">
+                                <rect key="frame" x="95.5" y="662" width="223.5" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zBZ-Le-M5t" secondAttribute="trailing" constant="20" id="04C-dw-ZWp"/>
                             <constraint firstItem="DjT-vZ-5Yc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3Ob-EY-NXI"/>
                             <constraint firstItem="rAX-5v-UJm" firstAttribute="top" secondItem="PUl-1g-Tg1" secondAttribute="bottom" constant="5" id="6AQ-dm-43U"/>
+                            <constraint firstItem="PUl-1g-Tg1" firstAttribute="top" secondItem="zBZ-Le-M5t" secondAttribute="bottom" constant="10" id="8h5-ig-BSj"/>
+                            <constraint firstItem="Ha5-qQ-F45" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9n3-0q-FSe"/>
                             <constraint firstItem="DjT-vZ-5Yc" firstAttribute="top" secondItem="qdg-NI-Q5u" secondAttribute="bottom" constant="10" id="CSZ-5i-k2b"/>
                             <constraint firstItem="h5N-SM-MW8" firstAttribute="top" secondItem="rAX-5v-UJm" secondAttribute="bottom" constant="20" id="Ibb-a3-ZGj"/>
+                            <constraint firstItem="zBZ-Le-M5t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="LVf-yb-4wH"/>
                             <constraint firstItem="PUl-1g-Tg1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="O21-dj-6Vt"/>
-                            <constraint firstItem="rAX-5v-UJm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="XQO-nP-VSV"/>
+                            <constraint firstItem="rAX-5v-UJm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="XQO-nP-VSV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qdg-NI-Q5u" secondAttribute="trailing" constant="10" id="ds3-u5-NfI"/>
                             <constraint firstItem="qdg-NI-Q5u" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="iHy-Of-JRX"/>
+                            <constraint firstItem="zBZ-Le-M5t" firstAttribute="top" secondItem="Ha5-qQ-F45" secondAttribute="bottom" constant="10" id="oKM-qX-sa3"/>
                             <constraint firstItem="h5N-SM-MW8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sb4-Wp-K2r"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rAX-5v-UJm" secondAttribute="trailing" constant="16" id="v4D-Xc-PnP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rAX-5v-UJm" secondAttribute="trailing" constant="20" id="v4D-Xc-PnP"/>
                             <constraint firstItem="h5N-SM-MW8" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="wYC-QY-pMz"/>
                             <constraint firstItem="qdg-NI-Q5u" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="wiu-UO-AOJ"/>
                         </constraints>
@@ -78,6 +95,7 @@
                         <outlet property="dotWidthLabel" destination="PUl-1g-Tg1" id="G0i-Tl-PgA"/>
                         <outlet property="dotWidthSlider" destination="rAX-5v-UJm" id="fD6-Bd-htS"/>
                         <outlet property="gameView" destination="qdg-NI-Q5u" id="32w-hw-qjG"/>
+                        <outlet property="numberOfDotsLabel" destination="Ha5-qQ-F45" id="KKm-gk-AOC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -88,9 +106,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
