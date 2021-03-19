@@ -18,6 +18,8 @@ class GameModel {
         self.bounds = bounds
         self.numberOfSides = numberOfSides
         self.dotSize = dotSize
+        
+        //Coordinates of the random dot
         x = CGFloat.random(in: 0..<bounds.width - dotSize)
         y = CGFloat.random(in: 0..<bounds.height - dotSize)
     }

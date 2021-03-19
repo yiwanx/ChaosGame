@@ -11,13 +11,6 @@ class GameView: UIImageView {
     
     var drawingLayer: CALayer?
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        isUserInteractionEnabled = true
-        
-    }
-    
-    
     func drawCALayer(_ rectForDots: [CGRect]) {
         setupDrawingLayerIfNeeded()
         
@@ -33,6 +26,8 @@ class GameView: UIImageView {
         
         drawingLayer?.addSublayer(layer)
         
+        
+        //Perform flattening if too much sublayers
         if let count = drawingLayer?.sublayers?.count, count > 400 {
             flattenToImage()
         }
